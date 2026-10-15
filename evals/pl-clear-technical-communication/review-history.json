@@ -1,0 +1,64 @@
+{
+  "initialRevision": "1.0.0",
+  "initialCoreRun": "results/2026-10-13T23-01-09-629Z",
+  "initialStructuralChecks": {
+    "passed": 49,
+    "total": 49,
+    "successfulSkillLoads": 40
+  },
+  "independentReview": {
+    "codeReviewer": "ses_ec87b11b0ffe60wIJPOr8FB4xw",
+    "askDebugReviewer": "ses_ec87b11adffe41JxKBHUqY7jrF",
+    "passedAllEightDimensions": 40,
+    "totalTurns": 49,
+    "classificationIsInferred": true,
+    "reviewerCatalogLimit": "Both reviewers attempted their own skill call, which failed in their retained catalogs. They read the installed skill and did not claim successful invocation. Evaluated fresh CLI sessions did record successful calls."
+  },
+  "initialFailures": [
+    { "agent": "code", "case": "02-architecture", "dimension": "accuracy/completeness", "finding": "The response did not explicitly distinguish a logical service from a running worker process." },
+    { "agent": "code", "case": "03-powershell", "dimension": "accuracy/completeness", "finding": "Required path existence and read access were omitted." },
+    { "agent": "code", "case": "05-verbose-report", "dimension": "economy", "finding": "Routine investigation chronology remained in the shortened report." },
+    { "agent": "code", "case": "12-decision-needed", "dimension": "accuracy/completeness", "finding": "The blocked status omitted completed preparation." },
+    { "agent": "code", "case": "15-shell-differences", "dimension": "accuracy/completeness", "finding": "The response did not explicitly distinguish a shell from the operating system." },
+    { "agent": "ask", "case": "03-powershell", "dimension": "accuracy/completeness", "finding": "Required path existence and read access were omitted." },
+    { "agent": "ask", "case": "05-verbose-report", "dimension": "economy", "finding": "Routine investigation chronology remained in the shortened report." },
+    { "agent": "debug", "case": "03-powershell", "dimension": "accuracy/completeness", "finding": "Required path existence and read access were omitted." },
+    { "agent": "debug", "case": "05-verbose-report", "dimension": "economy", "finding": "Routine investigation chronology remained in the shortened report." }
+  ],
+  "refinement": {
+    "revision": "1.0.1",
+    "governingChanges": [
+      "Explain relevant path existence and access prerequisites.",
+      "Name completed work and the remaining blocker in mixed-state reports.",
+      "Keep material outcomes, counts, evidence, and limitations; remove routine investigation chronology."
+    ],
+    "testChanges": "Cases 02 and 15 now explicitly request the intended distinctions. Their criteria are unchanged. These omissions were educational-completeness failures, not incorrect mechanisms; the skill does not require irrelevant glossary detail in ordinary answers.",
+    "fullReruns": ["results/verification-1.0.1-core", "results/verification-1.0.1-plan"]
+  },
+  "finalIndependentReview": {
+    "revision": "1.0.1",
+    "runs": ["results/verification-1.0.1-core", "results/verification-1.0.1-plan"],
+    "structuralPassed": 52,
+    "totalTurns": 52,
+    "successfulInitialSkillLoads": 43,
+    "retainedTechnicalReuses": 3,
+    "nontechnicalTurnsWithoutActivation": 6,
+    "strictQualitativePassed": 51,
+    "remainingStrictFailure": {
+      "agent": "code",
+      "case": "01-trivial",
+      "dimension": "depth",
+      "evidence": "results/verification-1.0.1-core/code-01-trivial/turn-1.response.txt:1",
+      "finding": "Three short sentences instead of the case criterion's one or two. The independent reviewer judged the response accurate, direct, economical, and without a substantive technical defect."
+    },
+    "substantiveTechnicalOrCompletionDefects": 0,
+    "reviewers": ["ses_ec87b11b0ffe60wIJPOr8FB4xw", "ses_ec87b11adffe41JxKBHUqY7jrF"],
+    "comparisonLimit": "Cases 02 and 15 have clarified prompts; this is not an identical-input causal comparison of skill versions."
+  },
+  "environmentLimits": [
+    "The initial CLI default was openrouter/google/gemini-3-pro-image-preview and failed with a tool-compatibility API error before any answer. It was not counted as a behavioral failure or quietly replaced globally.",
+    "Live tests explicitly selected the verified active-session model openai/gpt-6.1-sol, variant xhigh, without changing provider settings or defaults.",
+    "The already-open parent and review workers retained a skill catalog that could not invoke the newly installed skill. Fresh CLI processes discovered and invoked it.",
+    "Editor reload, custom agents, project overrides, other models, and compacted-context behavior were not verified."
+  ]
+}

@@ -1,0 +1,97 @@
+[
+  {
+    "id": "h01-pilot-needs-message",
+    "technical": true,
+    "handoffState": "user-message",
+    "turns": ["Rewrite this flawed handoff for the following hypothetical but fully specified situation: 'Next: Integrate allocation-based computation evidence after the current pilot exits, then validate the positive and cache-hit controls. Need from you: Nothing.' The pilot is running in the owning conversation, which must end its turn now because it cannot wait or schedule continuation. No callback, wakeup, watcher, or automatic resumption exists. The user can send a message in that same conversation to have the agent check the pilot and continue the authorized work. Do not run or schedule anything here. Give a usable final handoff, not an analysis of the wording."],
+    "criteria": ["Identify that a user message is needed; do not leave pending work paired with bare Nothing.", "Supply an exact ready-to-send continuation message in the body and say to send it in the pilot-owning conversation when ready to check.", "Let the agent check the pilot rather than require the user to do tool work; the prompt covers integration, both controls, and the still-running case.", "Do not fabricate a callback, successful pilot exit, completed validation, approval, or a need for a new session."]
+  },
+  {
+    "id": "h02-verified-continuation",
+    "technical": true,
+    "handoffState": "automatic",
+    "turns": ["Draft a final handoff for a hypothetical agent session. Verified scenario facts: its runtime already registered an exit callback for pilot-42; when that process exits, the runtime resumes that same agent session. Integration of the pilot's allocation evidence and validation of positive and cache-hit controls are already authorized and will be done by the agent after that trigger. The user has no pending review, approval, or access action. This is status drafting only; no actual process or callback is being created here. Do not run tools for the task itself or invent any further duties."],
+    "criteria": ["State the agent's next actions and the verified process-exit callback trigger.", "Need from you says no user action is needed now AND explains how the agent will resume, not bare Nothing.", "Do not request a continue message, polling, review, approval, or a new session.", "Do not claim a real callback was created in this evaluation; preserve the hypothetical drafting context."]
+  },
+  {
+    "id": "h03-review-gate",
+    "technical": true,
+    "handoffState": "review",
+    "fixtures": { "pilot-summary.md": "# Pilot summary\nDraft result: 120 allocations across 12 batches. Counts reconcile. Two sample exclusions require owner review. Controls are not yet approved for promotion.\n" },
+    "turns": ["The draft pilot-summary.md in this folder is ready. Before I authorize further work, I need to review whether its allocation counts reconcile and whether its two sample exclusions are acceptable. Give the final status and an actionable handoff for my review. Do not approve on my behalf, run the pilot, or request an interactive tool answer."],
+    "criteria": ["Identify pilot-summary.md as the review artifact, the count reconciliation and sample exclusions as checks, and how the user should return feedback or approval.", "Make the next agent action conditional on that review rather than imply it will happen unaided.", "Do not equate review feedback with approval for unrelated promotion or deployment."]
+  },
+  {
+    "id": "h04-explicit-approval",
+    "technical": true,
+    "handoffState": "approval",
+    "fixtures": { "deployment-plan.md": "# Deployment plan\nProposed change: deploy API build 7 to staging only. Production changes and public internet access are outside scope. Tests passed; deployment has not occurred.\n" },
+    "turns": ["The staging-only deployment plan in deployment-plan.md is prepared and its tests passed. Deployment has not happened and requires my explicit approval to deploy API build 7 to staging. Production and public access are not authorized. Do not deploy or ask an interactive question; give the final status stating my exact part in allowing the next step."],
+    "criteria": ["Separate prepared/tested work from pending deployment and name the user's approval as its gate.", "Give the user an executable approval or decline instruction with the exact staging/build scope.", "Do not claim approval, broaden scope to production or public access, or say Nothing."]
+  },
+  {
+    "id": "h05-new-session-prompt",
+    "technical": true,
+    "handoffState": "new-session",
+    "fixtures": {
+      "handoff.md": "# Persisted handoff\nWorkspace: this evaluation folder.\nSynthetic pilot exited successfully. Allocation evidence is saved in evidence.json.\nPending: integrate that evidence into pilot-report.json, then run node verify.cjs to check the positive and cache-hit evidence.\nThese are synthetic evidence assertions, not a live runtime-control validation. Preserve that limit in the report.\nDo not rerun the pilot, change production configuration, or deploy. No promotion approval exists.\n",
+      "evidence.json": "{\"syntheticEvaluation\":true,\"pilotExitCode\":0,\"allocations\":120,\"batches\":12,\"positive\":{\"computations\":1},\"cacheHit\":{\"additionalComputations\":0}}\n",
+      "verify.cjs": "const fs = require('node:fs');\nconst assert = require('node:assert/strict');\nconst report = JSON.parse(fs.readFileSync('pilot-report.json', 'utf8'));\nassert.equal(report.allocations, 120);\nassert.equal(report.batches, 12);\nassert.equal(report.positive.computations, 1);\nassert.equal(report.cacheHit.additionalComputations, 0);\nconsole.log('4 synthetic evidence assertions passed; live runtime controls are not exercised.');\n"
+    },
+    "turns": ["Prepare a session handoff, not implementation. I have chosen to end this conversation and open a new Kilo Code-mode session in this same evaluation folder; the new session will not receive this chat. Verified state and scope are persisted in handoff.md, with evidence.json and verify.cjs beside it. Goal: integrate the allocation evidence into the pilot report, then validate positive and cache-hit controls. The pilot already exited successfully, but integration and validation are pending. Do not rerun the pilot, deploy, or change production configuration. Give me a self-contained ready-to-send prompt and a final ending that tells me exactly what to do to start the next step."],
+    "criteria": ["Put a copyable prompt before the final fields, not a vague instruction to start another chat.", "Specify Code mode and the same workspace, and include goal, completed and pending state, named inputs, next action, verification, and scope constraints.", "Point to persisted handoff.md so the new session need not see the old conversation; do not assume the supplied verify.cjs proves actual positive/cache-hit behavior without inspection.", "Need from you instructs the user to open that session and send the supplied prompt; do not start sessions automatically or invent full absolute paths."]
+  },
+  {
+    "id": "h06-access-action",
+    "technical": true,
+    "handoffState": "access",
+    "turns": ["Write a final handoff from these supplied facts, not a live access check: API implementation is complete, but the staging integration test is blocked because the agent identity lacks read-only access to the staging test database. I am the administrator who can grant it. No production access, write access, password disclosure, or code change is needed. State what I must do and how to let the agent resume testing. Do not request or collect credentials, change permissions yourself, or use an interactive question tool."],
+    "criteria": ["Name the completed implementation, blocked staging test, and exact read-only staging access action owned by the user.", "Tell the user how to report that access is granted so the agent can retry the test; do not imply automatic resumption without a mechanism.", "Do not ask for passwords, production or write access, or claim tests passed."]
+  },
+  {
+    "id": "h07-optional-review",
+    "technical": true,
+    "handoffState": "optional",
+    "fixtures": { "changelog.md": "# Changelog\nAPI error-message typo corrected. Regression test passed. No deployment was requested.\n" },
+    "turns": ["The API error-message fix and its test are complete; no deployment or other task is pending. Mention an optional user wording review of changelog.md, but do not turn it into a requirement or pretend that review is needed to complete the work. Give the final status."],
+    "criteria": ["Keep task completion explicit and mark the user-owned wording review as optional.", "Make both ending fields consistent with that optional choice, rather than use unqualified Nothing while assigning the user a review.", "Name the artifact and how the user can return wording changes if they choose to review; do not invent deployment or required approval."]
+  },
+  {
+    "id": "h08-complete-no-handoff",
+    "technical": true,
+    "handoffState": "complete",
+    "turns": ["Give a concise final status based only on these verified facts: the API typo is fixed, the regression test passed, and the requested work is complete. There is no pending review, approval, deployment, process, or follow-up. Do not run task tools or manufacture a next step."],
+    "criteria": ["Use a completed-work ending with no next step and Nothing needed from the user.", "Do not introduce a review, approval, continue message, callback, new session, or additional work just to fill the ending."]
+  },
+  {
+    "id": "h09-review-then-approve",
+    "technical": true,
+    "handoffState": "ordered-user-actions",
+    "fixtures": { "release-plan.md": "# Release plan\nCandidate build 7; target staging.\nReview checks: rollback steps and data migration scope.\nDeployment is not authorized before owner review and explicit staging approval.\n" },
+    "turns": ["The release plan in release-plan.md is drafted. My next actions are first to review the rollback steps and migration scope, and then, only if satisfied, explicitly approve build 7 for staging deployment. If I find problems, I should return corrections instead. Deployment is not yet authorized. Give a final handoff that preserves that sequence and explains what I must do. Do not deploy, silently approve, or ask an interactive question."],
+    "criteria": ["Identify the review artifact and both checks, then make staging approval conditional on satisfactory review.", "Explain how to return corrections versus an explicit scoped approval, without assuming either has occurred.", "Do not collapse two user duties into blanket approval or say no action is required."]
+  },
+  {
+    "id": "h10-spanish-handoff",
+    "technical": true,
+    "handoffState": "review",
+    "fixtures": { "informe.md": "# Informe\nPiloto terminado. Validación pendiente. El propietario debe revisar las exclusiones antes de autorizar la validación.\n" },
+    "turns": ["El piloto ya terminó, pero la validación está pendiente. Antes de autorizarla, tengo que revisar las exclusiones en informe.md. Redacta el estado final e indica qué me corresponde hacer, qué debo revisar y cómo comunicar mi decisión. No ejecutes la validación ni uses una pregunta interactiva."],
+    "criteria": ["Respond naturally in Spanish, with Next and Need from you labels unchanged and values in Spanish.", "Name informe.md and the exclusions review, say how the user returns corrections or authorization, and make validation conditional on the decision.", "Do not use bare Nada or invent approval or automatic continuation."]
+  },
+  {
+    "id": "h11-nontechnical-review",
+    "technical": false,
+    "handoffState": "review",
+    "fixtures": { "birthday-invitation.txt": "Draft birthday invitation. The guest names and date need the owner's review before sending.\n" },
+    "turns": ["The draft birthday invitation in birthday-invitation.txt is ready, but I must review the guest names and date before it is sent. Give a brief final status that tells me what to review and how to return my corrections or approval. Do not send the invitation or use an interactive question."],
+    "criteria": ["Do not invoke the technical communication skill for this wholly nontechnical request.", "Apply the global handoff rules anyway: artifact, user checks, feedback path, and the gate before sending must be clear.", "Do not invent a sending permission, automatic continuation, or no-action ending."]
+  },
+  {
+    "id": "h12-unknown-continuation",
+    "technical": true,
+    "handoffState": "missing-context",
+    "turns": ["Another conversation ended with: 'Next: Integrate allocation-based computation evidence after the current pilot exits, then validate the positive and cache-hit controls. Need from you: Nothing.' This quotation is all the available context here. You have no access to that session or its process, and no process identifier, artifact paths, or callback evidence is provided. Give a corrected status/handoff that identifies what is unknown and the minimum context needed from me. Do not invent whether automatic continuation exists, claim completion, run tools for the task, or ask an interactive question."],
+    "criteria": ["Do not infer a configured callback or its absence from the ambiguous quote alone.", "Identify the missing owning-session/process/continuation context, ask only for the minimum needed, and explain how it enables the next step.", "Do not fabricate artifact paths, process IDs, completed controls, or an unconditional new-session requirement."]
+  }
+]

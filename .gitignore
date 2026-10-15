@@ -1,0 +1,8 @@
+# Raw evaluation output: full transcripts and local paths. Keep local, never publish.
+evals/**/results/
+
+__pycache__/
+*.pyc
+node_modules/
+.DS_Store
+Thumbs.db

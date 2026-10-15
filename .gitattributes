@@ -1,0 +1,6 @@
+# Keep LF everywhere. core.autocrlf=true on Windows would otherwise check out CRLF,
+# and the validator rejects CRLF in SKILL.md files.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.gif binary
