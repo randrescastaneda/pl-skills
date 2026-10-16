@@ -28,4 +28,5 @@ git branch -D eval/steward                                  # after review
 
 | Date | Host / version | Model | Case | Result | Note |
 | --- | --- | --- | --- | --- | --- |
-| | | | | | |
+| 2026-10-16 | Kilo CLI 7.8.8, `kilo run --agent code` | openai/gpt-6.1-sol | S1 | PASS | Loaded the steward, read only the catalog, recommended `pl-overcomplication-check`, changed nothing. The answer omitted the global Next / Need from you fields (a global-instructions issue, not the steward). |
+| | | | S2-S5 | NOT RUN | |

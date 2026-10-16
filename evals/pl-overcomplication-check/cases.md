@@ -44,4 +44,6 @@ The last user line of each fixture is the request that should trigger the skill.
 
 | Date | Host / version | Model | Case | Result | Note |
 | --- | --- | --- | --- | --- | --- |
-| | | | | | |
+| 2026-10-16 | Kilo CLI 7.8.8, `kilo run --agent code`, fixture attached with `--file` | openai/gpt-6.1-sol | A | PASS | Loaded the skill first; Overcomplicated; Keep/Remove/Defer correct; asked for approval; new-session prompt fenced with constraints and stop conditions; workspace unchanged. Minor: per-item checks are in the table, not repeated inside the prompt. |
+| 2026-10-16 | Kilo CLI 7.8.8, `kilo run --agent code`, fixture attached with `--file` | openai/gpt-6.1-sol | B | PASS | Loaded the skill first; On track; `na.strings` treated as required; no invented cuts; short output; workspace unchanged. |
+| | | | C, D, E, T1, T2 | NOT RUN | |
