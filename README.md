@@ -73,6 +73,8 @@ npx skills@latest update                                  # later: update instal
 
 Each `pl-` skill works on its own. When one skill mentions another, it states what to do if the other is not installed.
 
+Status: these `npx` commands follow the skills CLI documentation but have not yet been tested against this repository. The repository uses the standard `skills/<name>/SKILL.md` layout that the CLI expects. Please open an issue if they fail.
+
 ## Optional: always-on technical communication
 
 Skills load on demand. To apply `pl-clear-technical-communication` to every technical request, add a rule like this to your agent's global instructions (Kilo: `~/.config/kilo/AGENTS.md`; Codex: `~/.codex/AGENTS.md`; Claude Code: `~/.claude/CLAUDE.md`):
