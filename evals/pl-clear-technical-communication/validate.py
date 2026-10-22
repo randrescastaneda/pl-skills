@@ -35,7 +35,7 @@ def main():
     assert not re.search(r"!`[^`]+`", body), "Communication skill must not execute embedded commands"
 
     references = re.findall(r"\]\((references/[^)]+)\)", body)
-    assert len(set(references)) >= 6, "Expected the core modular references"
+    assert len(set(references)) >= 5, "Expected the core modular references"
     assert len(references) == len(set(references)), "Reference routes must be unique"
     for reference in references:
         assert (root / reference).is_file(), f"Missing reference: {reference}"

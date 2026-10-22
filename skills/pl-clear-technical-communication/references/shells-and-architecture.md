@@ -2,7 +2,7 @@
 
 ## Commands
 
-Identify the environment only to the precision that changes correctness. Windows PowerShell 5.1, PowerShell 7, Bash, zsh, and cmd have different syntax, quoting, and error behavior. A terminal application does not determine which shell it hosts. Do not present Bash syntax as PowerShell syntax.
+Identify the environment only to the precision that changes correctness. Windows PowerShell 5.1, PowerShell 7, Bash, zsh, and cmd have different syntax, quoting, and error behavior. A terminal application does not determine which shell it hosts. Do not present Bash syntax as PowerShell syntax. When the user may run a command on both Windows and macOS, give both forms (for example, PowerShell and zsh) or state which platform the command targets.
 
 Explain a command's operation, target, scope, and side effects. Include material prerequisites such as permissions, modules, executable availability, or working directory. State destructive or security-sensitive effects before execution. A dry run can show intended changes, but is not proof that a real operation succeeded.
 
